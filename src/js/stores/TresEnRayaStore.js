@@ -7,6 +7,7 @@ var turno = Constants.JUGADORX;
 var valoresTablero = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']];
 var xMoves = 0;
 var yMoves = 0;
+var history = new Array();
 
 function comprobarGanador(){
 	for(var i=0; i<3; i++){
@@ -22,7 +23,7 @@ function comprobarGanador(){
 	if((valoresTablero[0][0]!='-')&&(valoresTablero[0][0]===valoresTablero[1][1])&&(valoresTablero[1][1]===valoresTablero[2][2])){
 		alert("Ha ganado el "+turno);
 	}
-	else if ((valoresTablero[0][2]!='-')&&(valoresTablero[0][2]===valoresTablero[1][1])&&(valoresTablero[1][1]===valores[2][0])) {
+	else if ((valoresTablero[0][2]!='-')&&(valoresTablero[0][2]===valoresTablero[1][1])&&(valoresTablero[1][1]===valoresTablero[2][0])) {
 		alert("Ha ganado el "+turno);
 	}
 }
@@ -40,6 +41,9 @@ var TresEnRayaStore = Object.assign({}, EventEmitter.prototype, {
   getyMoves: function (){
     return yMoves;
   },
+	getHistory: function (){
+		return history;
+	},
   addChangeListener(callback){
     this.on(Constants.CHANGE_EVENT, callback);
   },
@@ -61,6 +65,7 @@ TresEnRayaDispatcher.register(function (payload) {
       else{
         yMoves = yMoves+1;
       }
+			history.push({jugador: turno, casilla: "[" + payload.x + "," + payload.y + "]"});
       comprobarGanador();
       turno = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
       TresEnRayaStore.emitChange();

@@ -7,6 +7,7 @@ var TresEnRayaActions = require('../actions/TresEnRayaActions');
 
 import IndexScene from '../../../inicio';
 import PartidaScene from '../../../partida';
+import HistoryScene from '../../../history';
 
 function getAppStateFromStore(){
 	return{
@@ -34,7 +35,8 @@ var App = React.createClass({
 	render: function () {
  		const routes = [
 			{title: 'Index', index:0},
-			{title: 'Partida', index:1}
+			{title: 'Partida', index:1},
+			{title: 'Historial', index:2}
 		];
  		return (
  			<Navigator initialRoute={routes[0]} initialRouteStack={routes}
@@ -55,6 +57,8 @@ var App = React.createClass({
 							return <IndexScene onForward={onForward} onBack={onBack}/>
 						case 1:
 							return <PartidaScene onForward={onForward} onBack={onBack}/>
+						case 2:
+							return <HistoryScene onForward={onForward} onBack={onBack}/>
 					}
 				}}
 			/>

@@ -12,10 +12,11 @@ var PartidaScene = React.createClass({
     var texto = "Turno del" + TresEnRayaStore.getTurno();
     return(
       <View style={{flex: 1, margin: 10}}>
-				<Cabecera texto={texto} xMoves={TresEnRayaStore.getxMoves} yMoves={TresEnRayaStore.getyMoves}/>
-				<Tablero valores={TresEnRayaStore.getValores}/>
-        <MyButton onPress={TresEnRayaActions.nuevaPartida} text={"Nueva Partida"}/>
-        <MyButton onPress={this.props.onBack} text={"Volver"}/>
+				<Cabecera style={{flex: 2}} texto={texto} xMoves={TresEnRayaStore.getxMoves} yMoves={TresEnRayaStore.getyMoves}/>
+				<Tablero style={{flex: 5}} valores={TresEnRayaStore.getValores}/>
+        <MyButton style={{flex: 1}} onPress={TresEnRayaActions.nuevaPartida} text={"Nueva Partida"}/>
+        <MyButton style={{flex: 1}} onPress={this.props.onBack} text={"Volver"}/>
+        <MyButton style={{flex: 1}} onPress={this.props.onForward} text={"Ver el historial"}/>
 			</View>
     )
   }
