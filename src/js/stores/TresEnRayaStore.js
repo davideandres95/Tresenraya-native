@@ -75,8 +75,17 @@ TresEnRayaDispatcher.register(function (payload) {
       turno = payload.turno;
       xMoves = payload.xMoves;
       yMoves = payload.yMoves;
+			history = payload.history;
       TresEnRayaStore.emitChange();
       break;
+		case Constants.ActionTypes.CARGAR_PARTIDA:
+			valoresTablero = payload.valores;
+			turno = payload.turno;
+			xMoves = payload.xMoves;
+			yMoves = payload.yMoves;
+			history = payload.history;
+			TresEnRayaStore.emitChange();
+			break;
   }
 });
 

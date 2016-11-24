@@ -15,7 +15,18 @@ module.exports = {
       turno: Constants.JUGADORX,
 			valores: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']],
       xMoves:0,
-      yMoves:0
+      yMoves:0,
+      history: new Array(),
     });
-  }
+  },
+  cargarPartida: function(value){
+    TresEnRayaDispatcher.dispatch({
+      type: Constants.ActionTypes.CARGAR_PARTIDA,
+      turno: value.turno,
+			valores: value.valores,
+      xMoves: value.xMoves,
+      yMoves: value.yMoves,
+      history: value.history,
+    });
+  },
 };

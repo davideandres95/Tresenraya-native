@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Navigator } from 'react-native';
+import { Navigator, AsyncStorage } from 'react-native';
 
 
 var TresEnRayaStore = require('../stores/TresEnRayaStore');
@@ -14,7 +14,8 @@ function getAppStateFromStore(){
 		turno : TresEnRayaStore.getTurno(),
 		valores: TresEnRayaStore.getValores(),
 		xMoves: TresEnRayaStore.getxMoves(),
-		yMoves: TresEnRayaStore.getyMoves()
+		yMoves: TresEnRayaStore.getyMoves(),
+		history: TresEnRayaStore.getHistory()
 	};
 }
 
@@ -31,6 +32,26 @@ var App = React.createClass({
 	_onChange: function(){
 		var newState = getAppStateFromStore();
 		this.setState(newState);
+	},
+	_saveData: async function(){
+	  try {
+			var values = JSON.stringify(getAppStateFromStore());
+	    await AsyncStorage.setItem('partidaGuardada', values);
+	  } catch (error) {
+	    // Error saving data
+	  }
+	},
+
+	_loadData: async function(){
+	  try {
+	    let value = await AsyncStorage.getItem('partidaGuardada');
+	    if (value !== null){
+				let SavedState = JSON.parse(value)
+	      TresEnRayaActions.cargarPartida(SavedState);
+	    }
+	  } catch (error) {
+	    // Error retrieving data
+	  }
 	},
 	render: function () {
  		const routes = [
@@ -54,7 +75,7 @@ var App = React.createClass({
 					}
 					switch (route.index) {
 						case 0:
-							return <IndexScene onForward={onForward} onBack={onBack}/>
+							return <IndexScene onForward={onForward} saveData={this._saveData} loadData={this._loadData} onBack={onBack}/>
 						case 1:
 							return <PartidaScene onForward={onForward} onBack={onBack}/>
 						case 2:
